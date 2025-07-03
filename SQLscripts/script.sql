@@ -109,3 +109,32 @@ WHERE v.id NOT IN (
     JOIN Reservation r ON rv.reservation_id = r.id
     WHERE @data_consulta BETWEEN DATE(r.checkin_date) AND DATE(r.checkout_date)
 );
+
+--- insertes para teste
+INSERT INTO Client (name, email, contact) VALUES 
+('Alice Lima', 'alice@email.com', '11111111111'),
+('Bruno Souza', 'bruno@email.com', '22222222222');
+INSERT INTO TypeOfRoom (num_vacancy, bathroom) VALUES 
+('4', TRUE),
+('8', FALSE);
+INSERT INTO Room (room_number, room_type) VALUES 
+(101, 1),
+(102, 2);
+INSERT INTO Vacancy (description, room_number, valuePerDiary) VALUES 
+('Cama 1 - Quarto 101', 101, 100.00),
+('Cama 2 - Quarto 101', 101, 100.00),
+('Cama 3 - Quarto 102', 102, 80.00),
+('Cama 4 - Quarto 102', 102, 80.00);
+-- Alice reservou de 10 a 14 de julho
+INSERT INTO Reservation (client_id, checkin_date, checkout_date, payment_status, total_value)
+VALUES (1, '2025-07-10 14:00:00', '2025-07-14 12:00:00', 'completed', 400.00);
+-- Bruno reservou de 11 a 13 de julho
+INSERT INTO Reservation (client_id, checkin_date, checkout_date, payment_status, total_value)
+VALUES (2, '2025-07-11 14:00:00', '2025-07-13 12:00:00', 'completed', 160.00);
+-- Alice ficou com as camas 1 e 2 (Quarto 101)
+INSERT INTO Reservation_Vacancy (reservation_id, vacancy_id) VALUES 
+(1, 1),
+(1, 2);
+-- Bruno ficou com a cama 3 (Quarto 102)
+INSERT INTO Reservation_Vacancy (reservation_id, vacancy_id) VALUES 
+(2, 3);
